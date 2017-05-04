@@ -60,3 +60,7 @@ end
     @test stanrepr([1 2 3; 4 5 6], compact = true) ==
         "structure(c(1,4,2,5,3,6),.Dim=c(2,3))"
 end
+
+@testset "dict" begin
+    @test stanrepr(Dict(:a => [1,2], :b => 9.0)) == "a = c(1, 2)\nb = 9.0\n"
+end

@@ -132,4 +132,10 @@ function standump{T <: Real}(sd::StanDumpIO, A::AbstractArray{T})
               ".Dim", COMPACTSPACE, "=", COMPACTSPACE, collect(size(A)), ")")
 end
 
+function standump{T}(sd::StanDumpIO, dict::Dict{Symbol,T})
+    for (varname, value) in dict
+        standump(sd, varname => value)
+    end
+end
+
 end # module
