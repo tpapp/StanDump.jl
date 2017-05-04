@@ -83,8 +83,7 @@ NOTE: only basic checks, does not test conflicts with reserved names.
 """
 function is_valid_stan_varname(varname::String)
     isvalid(c) = isascii(c) && (isalnum(c) || c == '_')
-    all(isvalid, varname) && isalpha(varname[1]) &&
-        (varname[max(1,end-1):end] != "__")
+    all(isvalid, varname) && isalpha(varname[1]) && !endswith(varname, "__")
 end
 
 function _standump(sd::StanDumpIO, x::Symbol)

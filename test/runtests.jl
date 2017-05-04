@@ -77,6 +77,8 @@ end
         standump(sd, :a => 1, :b => 2) # multiple arguments
         @test String(take!(io)) == "a=1\nb=2\n"
     end
-    @test_throws ErrorException stanrepr(:s)      # standalone symbol
-    @test_throws ErrorException stanrepr(nothing) # unknown type
+    @test_throws Exception stanrepr(:s)      # standalone symbol
+    @test_throws Exception stanrepr(nothing) # unknown type
+    @test_throws Exception stanrepr(:s__ => 1) # invalid name
+    @test_throws Exception stanrepr(Symbol("1s") => 1) # invalid name
 end
