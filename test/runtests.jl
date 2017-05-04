@@ -70,3 +70,13 @@ end
         @test String(take!(io)) == s
     end
 end
+
+@testset "general" begin
+    let io = IOBuffer(),
+        sd = StanDumpIO(io, compact = true)
+        standump(sd, :a => 1, :b => 2) # multiple arguments
+        @test String(take!(io)) == "a=1\nb=2\n"
+    end
+    @test_throws ErrorException stanrepr(:s)      # standalone symbol
+    @test_throws ErrorException stanrepr(nothing) # unknown type
+end
