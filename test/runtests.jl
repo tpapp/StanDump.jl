@@ -62,5 +62,11 @@ end
 end
 
 @testset "dict" begin
-    @test stanrepr(Dict(:a => [1,2], :b => 9.0)) == "a = c(1, 2)\nb = 9.0\n"
+    d = Dict(:a => [1,2], :b => 9.0)
+    s = "a = c(1, 2)\nb = 9.0\n"
+    @test stanrepr(d) == s      # special case for dictionaries and io streams
+    let io = IOBuffer()
+        standump(io, d)
+        @test String(take!(io)) == s
+    end
 end
