@@ -1,5 +1,7 @@
 module StanDump
 
+using ArgCheck
+
 export StanDumpIO, standump
 
 """
@@ -59,7 +61,6 @@ _standump(sd::StanDumpIO, x::Union{Char,String}) = print(sd.io, x)
 "Write a space unless output is requested to be compact."
 struct CompactSpace end
 const COMPACTSPACE = CompactSpace()
-
 _standump(sd::StanDumpIO, ::CompactSpace) = if !sd.compact print(sd.io, " ") end
 
 function standump(sd::StanDumpIO, x::Integer)
@@ -88,7 +89,7 @@ end
 
 function _standump(sd::StanDumpIO, x::Symbol)
     v = string(x)
-    @assert is_valid_stan_varname(v) "Invalid variable name $v."
+    @argcheck is_valid_stan_varname(v) "Invalid variable name $v."
     print(sd.io, v)
 end
 
