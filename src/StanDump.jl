@@ -2,7 +2,7 @@ module StanDump
 
 using ArgCheck
 
-export StanDumpIO, standump
+export StanDumpIO, standump, @vardict
 
 """
 Wrapper for an IO stream for writing data for use by Stan. See
@@ -140,6 +140,18 @@ end
 
 function standump{T}(io::IO, dict::Dict{Symbol, T}; options...)
     standump(StanDumpIO(io; options...), dict)
+end
+
+"""
+    @vardict varnames...
+
+Create a `Dict` of `:varname => varname` values. Useful as a shorthand
+for creating dictionaries of variables and their values before passing
+them to `standump`.
+"""
+macro vardict(varnames::Symbol...)
+    args = [:($(Meta.quot(varname)) => $(esc(varname))) for varname in varnames]
+    :(Dict($(args...)))
 end
 
 end # module

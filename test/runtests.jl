@@ -82,3 +82,10 @@ end
     @test_throws Exception stanrepr(:s__ => 1) # invalid name
     @test_throws Exception stanrepr(Symbol("1s") => 1) # invalid name
 end
+
+@testset "vardict" begin
+    a = 1
+    b = 2
+    c = 3
+    @test @vardict(a, b, c) == Dict(:a => 1, :b => 2, :c => 3)
+end
