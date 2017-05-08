@@ -26,7 +26,7 @@ end
 end
 
 @testset "definition" begin
-    @test stanrepr(:A => 99) == "A = 99\n" # defaults
+    @test stanrepr(:A => 99) == "A <- 99\n" # defaults
     # non-compact
     @test stanrepr(:A => 99, def_arrow = false, def_newline = false,
                    compact = false) == "A = 99\n" # same as above
@@ -63,7 +63,7 @@ end
 
 @testset "dict" begin
     d = Dict(:a => [1,2], :b => 9.0)
-    s = "a = c(1, 2)\nb = 9.0\n"
+    s = "a <- c(1, 2)\nb <- 9.0\n"
     @test stanrepr(d) == s      # special case for dictionaries and io streams
     let io = IOBuffer()
         standump(io, d)
@@ -75,7 +75,7 @@ end
     let io = IOBuffer(),
         sd = StanDumpIO(io, compact = true)
         standump(sd, :a => 1, :b => 2) # multiple arguments
-        @test String(take!(io)) == "a=1\nb=2\n"
+        @test String(take!(io)) == "a<-1\nb<-2\n"
     end
     @test_throws Exception stanrepr(:s)      # standalone symbol
     @test_throws Exception stanrepr(nothing) # unknown type

@@ -25,7 +25,7 @@ Wrap an IO stream `io` for writing data to be read by Stan.
 * `def_newline::Bool`: when `true`, `=` or `<-` is followed by a newline.
 * `compact::Bool`: when `true`, drop spaces when possible.
 """
-function StanDumpIO(io; def_arrow = false, def_newline = false, compact = false)
+function StanDumpIO(io; def_arrow = true, def_newline = false, compact = false)
     StanDumpIO(io, def_arrow, def_newline, compact)
 end
 
