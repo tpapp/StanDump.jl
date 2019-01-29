@@ -4,19 +4,15 @@
 [![Coverage Status](https://coveralls.io/repos/tpapp/StanDump.jl/badge.svg?branch=master&service=github)](https://coveralls.io/github/tpapp/StanDump.jl?branch=master)
 [![codecov.io](http://codecov.io/github/tpapp/StanDump.jl/coverage.svg?branch=master)](http://codecov.io/github/tpapp/StanDump.jl?branch=master)
 
-Julia package for dumping data in a format that can be read by [CmdStan](http://mc-stan.org/interfaces/cmdstan.html).
+Julia package for saving *data* (arrays and scalars) in a format that can be read by [`cmdstan`](http://mc-stan.org/interfaces/cmdstan.html).
 
 # Example usage
 
 ```julia
-data = Dict(:N => 200)
-data[:x] = randn(data[:N])
-open(io -> standump(io, data), "w")
+N = 200
+stan_dump("/tmp/test.data.R", (N = N, x = randn(N)))
 ```
 
-# Key features
+`stan_dump(target, data)` is the main entry point. The first argument is usually a filename (see its docstring for other options), while the `data` is specified as a `NamedTuple`.
 
-1. `standump(sd, xs...)` is the main entry point. The first argument is a `StanDumpIO` object, which wraps an `IO` stream, the other arguments are dumped into this in the format recognized by Stan.
-2. Use the constructor of `StanDumpIO` to specify options, eg whether to use `=` or `<-` for assignment, to squash spaces, etc.
-3. Dictionaries are written out as `variable = value` assignments. Symbols are used for variable names, with minimal validation. This is the most common use case, unless you wish to avoid constructing one (because your data is large).
-4. `standump(::IO, ::Dict; options...)` is a convenient shorthand for the above case.
+Variable names are minimally validated. Only supports types understood by `cmdstan`.
