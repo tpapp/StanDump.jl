@@ -1,14 +1,14 @@
 """
 StanDump --- a package for writing data in the CmdStan dump data format.
 
-The single exported function is [`standump`](@ref).
+The single exported function is [`stan_dump`](@ref).
 """
 module StanDump
 
 using ArgCheck: @argcheck
 using DocStringExtensions: SIGNATURES
 
-export standump
+export stan_dump
 
 ####
 #### Representation of formatting
@@ -156,9 +156,9 @@ end
 ####
 
 """
-    standump(filename, data; force = false, kwargs...)
-    standump(io, data; kwargs...)
-    standump(StanDump.StanDumpIO(io; kwargs...), data)
+    stan_dump(filename, data; force = false, kwargs...)
+    stan_dump(io, data; kwargs...)
+    stan_dump(StanDump.StanDumpIO(io; kwargs...), data)
 
 Write `data`, which is a value that supports `pairs` (eg a `NamedTuple` or a `Dict`) to
 `filename` or `io`.
@@ -171,19 +171,19 @@ care about this, except for debugging purposes).
 # Example
 
 ```jldoctest
-julia> standump(stdout, (N = 1, a = 1:5, b = ones(2, 2)))
+julia> stan_dump(stdout, (N = 1, a = 1:5, b = ones(2, 2)))
 N <- 1
 a <- 1:5
 b <- structure(c(1.0, 1.0, 1.0, 1.0), .Dim = c(2, 2))
 ```
 """
-standump(sd::StanDumpIO, data) = foreach(p -> _dump(sd, p), pairs(data))
+stan_dump(sd::StanDumpIO, data) = foreach(p -> _dump(sd, p), pairs(data))
 
-standump(io::IO, data; kwargs...) = standump(StanDumpIO(io; kwargs...), data)
+stan_dump(io::IO, data; kwargs...) = stan_dump(StanDumpIO(io; kwargs...), data)
 
-function standump(filename::AbstractString, data; force::Bool = false, kwargs...)
+function stan_dump(filename::AbstractString, data; force::Bool = false, kwargs...)
     @argcheck force || !ispath(filename) "$(filename) already exists"
-    open(io -> standump(StanDumpIO(io; kwargs...), data), filename, "w")
+    open(io -> stan_dump(StanDumpIO(io; kwargs...), data), filename, "w")
 end
 
 end # module
