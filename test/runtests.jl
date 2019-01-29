@@ -75,7 +75,7 @@ end
     d = Dict(:a => [1, 2], :b => 9.0)
     s = "a <- c(1, 2)\nb <- 9.0\n"
     let io = IOBuffer()
-        standump(io, d)
+        stan_dump(io, d)
         @test String(take!(io)) == s
     end
 end
@@ -83,6 +83,6 @@ end
 @testset "general" begin
     io = IOBuffer()
     sd = StanDumpIO(io; compact = true)
-    standump(sd, (a = 1, b = 2)) # multiple arguments
+    stan_dump(sd, (a = 1, b = 2)) # multiple arguments
     @test String(take!(io)) == "a<-1\nb<-2\n"
 end
