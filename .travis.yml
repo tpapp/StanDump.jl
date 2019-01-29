@@ -13,9 +13,9 @@ git:
 
 ## uncomment the following lines to allow failures on nightly julia
 ## (tests will run but not make your overall status red)
-# matrix:
+#matrix:
 #  allow_failures:
-#  - julia: 1                     # does not have range, comment when 1.1 comes out
+#  - julia: nightly
 
 ## uncomment following lines to deploy documentation
 # jobs:
