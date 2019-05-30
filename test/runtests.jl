@@ -86,3 +86,7 @@ end
     stan_dump(sd, (a = 1, b = 2)) # multiple arguments
     @test String(take!(io)) == "a<-1\nb<-2\n"
 end
+
+@testset "accidental varnames (from pairs)" begin
+    @test_throws ArgumentError stan_dump(stdout, 1:3)
+end

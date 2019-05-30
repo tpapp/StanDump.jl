@@ -112,6 +112,7 @@ end
 
 function _dump(sd::StanDumpIO, x::Pair)
     name, value = x
+    @argcheck name isa Union{AbstractString, Symbol} "Use symbols or strings for variable names."
     varname = string(name)
     @argcheck is_valid_varname(varname)
     _dump(sd, varname, SPACE, sd.def_arrow ? "<-" : '=',
