@@ -4,7 +4,9 @@ authors = ["Tamas K. Papp <tkpapp@gmail.com>"]
 version = "0.2.0"
 
 [compat]
-julia = "≥ 1.1"
+julia = "1.1"
+ArgCheck = "1, 2"
+DocStringExtensions = "0.6, 0.7, 0.8, 0.9"
 
 [deps]
 ArgCheck = "dce04be8-c92d-5529-be00-80e4d2c0e197"
